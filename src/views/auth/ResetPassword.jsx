@@ -85,7 +85,7 @@ function ResetPassword() {
         } else {
             Toast('success', 'Password reset successfully!');
             setTimeout(() => {
-                navigate('/sign-in');
+                navigate('/sign-in/');
             }, 2000);
         }
         setIsLoading(false);

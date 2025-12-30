@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
 
     // Conditionally render the children if the user is authenticated.
     // If the user is not authenticated, redirect them to the login page.
-    return isLoggedIn ? <>{children}</> : <Navigate to="/sign-in" replace />;
+    return isLoggedIn ? <>{children}</> : <Navigate to="/sign-in/" replace />;
 };
 
 // Export the 'PrivateRoute' component to make it available for use in other parts of the application.

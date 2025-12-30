@@ -41,7 +41,7 @@ function App() {
             } 
           />
           <Route 
-            path="/sign-in" 
+            path="/sign-in/" 
             element={
               <PublicRoute>
                 <Login />
