@@ -68,7 +68,7 @@ function SignUp(){
     const handleVerificationSuccess = () => {
         Toast('success', 'Email verified! You can now log in.');
         setTimeout(() => {
-            navigate("/sign-in/");
+            navigate("/sign-in");
         }, 2000);
     }
 
@@ -272,7 +272,7 @@ function SignUp(){
                         <div className="text-center">
                             <p className="text-slate-600">
                                 Already have an account? 
-                                <Link to="/sign-in/" className="ml-1 text-primary hover:text-primary/80 font-semibold transition">
+                                <Link to="/sign-in" className="ml-1 text-primary hover:text-primary/80 font-semibold transition">
                                     Sign In
                                 </Link>
                             </p>

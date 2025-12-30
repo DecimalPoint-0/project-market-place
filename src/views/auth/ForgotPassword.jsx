@@ -119,7 +119,7 @@ function ForgotPassword() {
                         <div className="text-center">
                             <p className="text-slate-600 mb-3">
                                 Remember your password?
-                                <Link to="/sign-in/" className="ml-1 text-red-600 hover:text-red-700 font-semibold transition">
+                                <Link to="/sign-in" className="ml-1 text-red-600 hover:text-red-700 font-semibold transition">
                                     Sign In
                                 </Link>
                             </p>

@@ -33,7 +33,7 @@ function App() {
           
           {/* Public Auth Routes - Redirect to dashboard if already logged in */}
           <Route 
-            path="/sign-up/" 
+            path="/sign-up" 
             element={
               <PublicRoute>
                 <SignUp />
@@ -41,7 +41,7 @@ function App() {
             } 
           />
           <Route 
-            path="/sign-in/" 
+            path="/sign-in" 
             element={
               <PublicRoute>
                 <Login />

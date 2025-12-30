@@ -40,7 +40,7 @@ function AdminNavBar(){
 
     const handleLogout = () => {
         Cookies.remove('access_token');
-        window.location.href = '/sign-in/';
+        window.location.href = '/sign-in';
     }
 
     return (

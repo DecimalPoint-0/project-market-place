@@ -10,7 +10,7 @@ function Header() {
                 <li className="navitem"><Link className="active" to='/dashboard/'>Home</Link></li>
                 <li className="navitem"><Link to='/projects/' >Projects</Link></li>
                 <li className="navitem"><Link to="/about-us/" >About Us</Link></li>
-                <li className="navitem"><Link to="/sign-in/">Sign in</Link></li>
+                <li className="navitem"><Link to="/sign-in">Sign in</Link></li>
                 <li className="navitem">
                     <Link to="/sign-up/" className="btn px-4 py-2 text-sm">Sign Up</Link>
                 </li>
