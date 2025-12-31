@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import '@fortawesome/fontawesome-free/css/all.css';
 import logo from '../../assets/images/logo.png';
 import Cookies from 'js-cookie';
 import apiInstance from "../../utils/axios";
 import { Link } from "react-router-dom";
+import { SidebarContext } from "../../context/SidebarContext";
 
 function AdminNavBar(){
 
     const accessToken = Cookies.get('access_token');
     const [notification, setNotification] = useState(false);
     const [profile, setProfile] = useState({ name: "" });
+    const { sidebarOpen, setSidebarOpen } = useContext(SidebarContext);
 
     const fetchNotification = async () => {
         try {
@@ -46,6 +48,15 @@ function AdminNavBar(){
     return (
         <nav className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
             <div className="flex items-center justify-between px-6 py-4 max-w-full">
+                {/* Hamburger Menu for Mobile */}
+                <button
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                    className="md:hidden p-2 text-slate-600 hover:text-primary hover:bg-slate-100 rounded-lg transition -ml-2"
+                    aria-label="Toggle sidebar"
+                >
+                    <i className="fas fa-bars text-xl"></i>
+                </button>
+
                 {/* Logo */}
                 <Link to="/dashboard/" className="flex items-center gap-3 group">
                     <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center text-white">

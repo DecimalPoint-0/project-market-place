@@ -364,11 +364,18 @@ function Wallet(){
                                 <h3 className="text-lg font-bold text-primary">Withdrawal History</h3>
                             </div>
 
-                            {cashoutHistory && cashoutHistory.length > 0 ? (
+                            {isLoading ? (
+                                <div className="card text-center py-12">
+                                    <div className="flex justify-center mb-4">
+                                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                                    </div>
+                                    <p className="text-slate-600">Loading withdrawal history...</p>
+                                </div>
+                            ) : cashoutHistory && cashoutHistory.length > 0 ? (
                                 <div className="overflow-x-auto">
                                     <table className="w-full">
                                         <thead>
-                                            <tr className="border-b border-slate-200">
+                                            <tr className="bg-slate-50 border-b border-slate-200">
                                                 <th className="text-left py-4 px-4 text-sm font-semibold text-slate-700">Date</th>
                                                 <th className="text-left py-4 px-4 text-sm font-semibold text-slate-700">Amount</th>
                                                 <th className="text-left py-4 px-4 text-sm font-semibold text-slate-700">Bank Details</th>

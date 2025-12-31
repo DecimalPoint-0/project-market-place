@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { setUser } from '../utils/auth';
 import { useAuthStore } from '../store/auth';
+import { SidebarProvider } from '../context/SidebarContext';
 
 const MainWrapper = ({ children }) => {
     // Initialize the 'loading' state variable and set its initial value to 'true'
@@ -26,7 +27,7 @@ const MainWrapper = ({ children }) => {
     }, []);
 
     // Render content conditionally based on the 'loading' state
-    return <>{loading ? null : children}</>;
+    return <SidebarProvider>{loading ? null : children}</SidebarProvider>;
 };
 
 export default MainWrapper;

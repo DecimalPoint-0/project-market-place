@@ -153,6 +153,7 @@ function Projects(){
             formData.append("title", newproject.title);
             formData.append("category", newproject.category);
             formData.append("level", newproject.level);
+            formData.append("description", newproject.description);
             formData.append("price", newproject.price);
             formData.append("table_of_content", newproject.table_of_content.file);
             formData.append("project_content", newproject.project_content.file);
@@ -205,7 +206,7 @@ function Projects(){
 
     return (
         <>
-            {isLoading && <Loader />}
+
             <main className="flex">
 
                 <div className="w-full pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
@@ -226,65 +227,89 @@ function Projects(){
                             </button>
                         </div>
 
-                        {/* Projects Grid or List */}
+                        {/* Projects Table */}
                         <div className="bg-white rounded-xl border border-slate-200">
-                            {myprojects.length > 0 ? (
+                            {isLoading ? (
+                                <div className="card text-center py-12">
+                                    <div className="flex justify-center mb-4">
+                                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                                    </div>
+                                    <p className="text-slate-600">Loading projects...</p>
+                                </div>
+                            ) : myprojects.length > 0 ? (
                                 <>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
-                                        {projectItems?.map((project) => (
-                                            <div
-                                                key={project?.id}
-                                                className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                                                >
-                                                <div className="flex items-start justify-between mb-3 gap-2">
-                                                    <h3 className="text-sm font-bold text-primary line-clamp-2 flex-1">{project?.title}</h3>
-                                                    <span className={`text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0 ${
-                                                        project?.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                                                    }`}>
-                                                        {project?.status ?? 'Pending'}
-                                                    </span>
-                                                </div>
-
-                                                <p className="text-xs text-slate-600 line-clamp-2 mb-4 min-h-8">{project?.description}</p>
-
-                                                <div className="grid grid-cols-3 gap-2 mb-4 pb-4 border-t border-slate-100 pt-3">
-                                                    <div className="text-center">
-                                                        <p className="text-slate-500 text-xs">Views</p>
-                                                        <p className="text-primary font-bold text-sm"><i className="fas fa-eye mr-1"></i>{project?.views ?? 0}</p>
-                                                    </div>
-                                                    <div className="text-center">
-                                                        <p className="text-slate-500 text-xs">Likes</p>
-                                                        <p className="text-red-500 font-bold text-sm"><i className="fas fa-heart mr-1"></i>{project?.like ?? 0}</p>
-                                                    </div>
-                                                    <div className="text-center">
-                                                        <p className="text-slate-500 text-xs">Price</p>
-                                                        <p className="text-primary font-bold text-xs">₦{project?.price}</p>
-                                                    </div>
-                                                </div>
-
-                                                <button className="w-full text-primary font-semibold text-sm border-t border-slate-100 pt-3 hover:text-primary/80">
-                                                    <i className="fas fa-edit mr-1"></i> Edit
-                                                </button>
-
-                                                {/* Plagiarism Check Buttons */}
-                                                <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100">
-                                                    <button
-                                                        onClick={() => handleOpenPlagiarismChecker(project)}
-                                                        className="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-2 rounded transition"
-                                                        title="Run plagiarism check"
-                                                    >
-                                                        <i className="fas fa-search mr-1"></i> Check
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleOpenPlagiarismResults(project)}
-                                                        className="text-xs bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2 px-2 rounded transition"
-                                                        title="View plagiarism reports"
-                                                    >
-                                                        <i className="fas fa-file-alt mr-1"></i> Reports
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ))}
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full">
+                                            <thead>
+                                                <tr className="bg-slate-50 border-b border-slate-200">
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Project Title</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Description</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Status</th>
+                                                    <th className="px-6 py-4 text-center text-sm font-semibold text-slate-700">Views</th>
+                                                    <th className="px-6 py-4 text-center text-sm font-semibold text-slate-700">Likes</th>
+                                                    <th className="px-6 py-4 text-right text-sm font-semibold text-slate-700">Price</th>
+                                                    <th className="px-6 py-4 text-center text-sm font-semibold text-slate-700">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {projectItems?.map((project) => (
+                                                    <tr key={project?.id} className="border-b border-slate-100 hover:bg-slate-50 transition">
+                                                        <td className="px-6 py-4">
+                                                            <p className="font-semibold text-primary line-clamp-2">{project?.title}</p>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-sm text-slate-600">
+                                                            <p className="line-clamp-2">{project?.description}</p>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${
+                                                                project?.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                                            }`}>
+                                                                {project?.status ?? 'Pending'}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-center">
+                                                            <span className="text-slate-700 font-semibold">
+                                                                <i className="fas fa-eye text-info mr-1"></i>
+                                                                {project?.views ?? 0}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-center">
+                                                            <span className="text-red-600 font-semibold">
+                                                                <i className="fas fa-heart mr-1"></i>
+                                                                {project?.like ?? 0}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-right">
+                                                            <p className="text-lg font-bold text-secondary">₦{project?.price?.toLocaleString()}</p>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex items-center justify-center gap-2">
+                                                                <button 
+                                                                    className="text-primary hover:text-primary/80 font-semibold text-sm transition"
+                                                                    title="Edit project"
+                                                                >
+                                                                    <i className="fas fa-edit"></i>
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleOpenPlagiarismChecker(project)}
+                                                                    className="text-blue-600 hover:text-blue-700 font-semibold text-sm transition"
+                                                                    title="Run plagiarism check"
+                                                                >
+                                                                    <i className="fas fa-search"></i>
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleOpenPlagiarismResults(project)}
+                                                                    className="text-green-600 hover:text-green-700 font-semibold text-sm transition"
+                                                                    title="View plagiarism reports"
+                                                                >
+                                                                    <i className="fas fa-file-alt"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                     {/* Pagination */}
