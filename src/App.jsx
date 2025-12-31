@@ -67,7 +67,7 @@ function App() {
           
           {/* Private Dashboard Routes - Require authentication */}
           <Route 
-            path="/dashboard/" 
+            path="/dashboard" 
             element={
               <PrivateRoute>
                 <Home />
@@ -75,7 +75,7 @@ function App() {
             } 
           />
           <Route 
-            path="/dashboard/about-us/" 
+            path="/dashboard/about-us" 
             element={
               <PrivateRoute>
                 <About />
@@ -83,7 +83,7 @@ function App() {
             } 
           />
           <Route 
-            path="/dashboard/profile/" 
+            path="/dashboard/profile" 
             element={
               <PrivateRoute>
                 <Profile />
@@ -91,7 +91,7 @@ function App() {
             } 
           />
           <Route 
-            path="/dashboard/projects/" 
+            path="/dashboard/projects" 
             element={
               <PrivateRoute>
                 <AddProjects />
@@ -99,7 +99,7 @@ function App() {
             } 
           />
           <Route 
-            path="/dashboard/wallet/" 
+            path="/dashboard/wallet" 
             element={
               <PrivateRoute>
                 <Wallet />
@@ -107,7 +107,7 @@ function App() {
             } 
           />
           <Route 
-            path="/dashboard/transactions/" 
+            path="/dashboard/transactions" 
             element={
               <PrivateRoute>
                 <Transactions />

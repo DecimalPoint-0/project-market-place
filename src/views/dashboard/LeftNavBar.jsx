@@ -7,7 +7,7 @@ function LeftNavBar(){
 
     const navItems = [
         { to: "/dashboard/", label: "Home", icon: "fa-home" },
-        { to: "/dashboard/projects/", label: "Projects", icon: "fa-project-diagram" },
+        { to: "/dashboard/projects", label: "Projects", icon: "fa-project-diagram" },
         { to: "/dashboard/wallet/", label: "Wallet", icon: "fa-wallet" },
         { to: "/dashboard/transactions/", label: "Transactions", icon: "fa-history" },
         { to: "/dashboard/profile/", label: "Profile", icon: "fa-user" },

@@ -189,7 +189,7 @@ function Home(){
                         {/* Quick Actions */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <Link 
-                                to="/dashboard/projects/"
+                                to="/dashboard/projects"
                                 className="bg-white rounded-xl p-4 text-center hover:shadow-md transition-shadow group"
                             >
                                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mx-auto mb-3 group-hover:scale-110 transition-transform">
