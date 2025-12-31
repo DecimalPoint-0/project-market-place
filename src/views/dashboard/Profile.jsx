@@ -83,7 +83,6 @@ function Profile(){
 
     return (
         <>
-            {isLoading && <Loader />}
 
             <main className="flex">
                 

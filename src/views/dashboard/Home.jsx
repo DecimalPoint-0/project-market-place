@@ -96,7 +96,6 @@ function Home(){
 
     return (
         <>
-            {isLoading && <Loader />}
 
             <main className="flex">
                 

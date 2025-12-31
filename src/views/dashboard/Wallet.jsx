@@ -168,7 +168,6 @@ function Wallet(){
     
     return (
         <>
-            {isLoading && <Loader />}
 
             <main className="flex">
 
