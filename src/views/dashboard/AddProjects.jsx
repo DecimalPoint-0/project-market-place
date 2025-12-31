@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Home from './Home'
 import AdminNavBar from "./AdminNavBar";
 import LeftNavBar from "./LeftNavBar";
 import chat1 from "../../assets/images/chat1.png";
@@ -207,11 +206,9 @@ function Projects(){
     return (
         <>
             {isLoading && <Loader />}
-            <AdminNavBar />
             <main className="flex">
-                <LeftNavBar />
 
-                <div className="flex-1 md:ml-64 pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
+                <div className="w-full pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
                     <div className="max-w-6xl mx-auto">
                         {/* Header with Button */}
                         <div className="flex items-center justify-between mb-12">

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AdminNavBar from "./AdminNavBar";
-import LeftNavBar from "./LeftNavBar";
 import '@fortawesome/fontawesome-free/css/all.css';
 import apiInstance from "../../utils/axios";
 import Toast from "../../plugin/Toast";
@@ -77,13 +75,10 @@ function Transactions(){
 
     return (
         <>
-            <AdminNavBar />
-
             <main className="flex">
-                <LeftNavBar />
                 
                 {/* Main Content */}
-                <div className="flex-1 md:ml-64 pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
+                <div className="w-full pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
                     <div className="max-w-6xl mx-auto">
                         
                         {/* Header */}

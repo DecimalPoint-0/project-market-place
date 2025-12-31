@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { setUser } from '../utils/auth';
+import { useAuthStore } from '../store/auth';
 
 const MainWrapper = ({ children }) => {
     // Initialize the 'loading' state variable and set its initial value to 'true'
     const [loading, setLoading] = useState(true);
+    const isLoggedIn = useAuthStore((state) => state.isLoggedIn());
 
     // Define a useEffect hook to handle side effects after component mounting
     useEffect(() => {

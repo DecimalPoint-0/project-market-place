@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import '@fortawesome/fontawesome-free/css/all.css';
-import AdminNavBar from "./AdminNavBar";
-import LeftNavBar from "./LeftNavBar";
 import Cookies from 'js-cookie';
 import Toast from "../../plugin/Toast";
 import useAxios from "../../utils/useAxios";
@@ -9,11 +7,14 @@ import { Link } from "react-router-dom";
 import apiInstance from "../../utils/axios";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Loader from "../../components/Loader";
+import { useAuthStore } from "../../store/auth";
 
 
 function Home(){
 
     const accessToken = Cookies.get('access_token');
+    const cachedUserData = useAuthStore((state) => state.allUserData);
+    
     const [profile, setProfile] = useState({
         name: "",
         contact: "",
@@ -83,23 +84,24 @@ function Home(){
     }
 
     useEffect(() => {
+        // Use cached profile data if available, otherwise fetch
+        if (cachedUserData) {
+            setProfile(cachedUserData);
+        }
+        
+        // Only fetch analytics on page load
         setIsLoading(true)
-        Promise.all([
-            fetchProfile(),
-            fetchAnalytics()
-        ]).finally(() => setIsLoading(false))
-    }, [])
+        fetchAnalytics().finally(() => setIsLoading(false))
+    }, [cachedUserData])
 
     return (
         <>
             {isLoading && <Loader />}
-            <AdminNavBar />
 
             <main className="flex">
-                <LeftNavBar />
                 
                 {/* Main Content */}
-                <div className="flex-1 md:ml-64 pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
+                <div className="w-full pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
                     <div className="max-w-7xl mx-auto">
                         
                         {/* Welcome Section */}
