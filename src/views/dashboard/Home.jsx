@@ -85,8 +85,7 @@ function Home(){
 
     useEffect(() => {
         // Use cached profile data if available, otherwise fetch
-
-        setProfile(cachedUserData);
+        fetchProfile()
         
         // Only fetch analytics on page load
         setIsLoading(true)
