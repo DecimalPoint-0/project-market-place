@@ -105,6 +105,7 @@ function Wallet(){
 
     const fetchWallet = async () => {
         try {
+            setIsLoading(true)
             const response = await apiInstance.get('user/wallet',
                 // includes JWT 
                 { headers: { 
@@ -118,8 +119,10 @@ function Wallet(){
                 account_number: response.data.account_number || '',
                 bank: response.data.bank || ''
             })
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
 
@@ -131,14 +134,17 @@ function Wallet(){
 
     const fetchCashoutHistory = async () => {
         try {
+            setIsLoading(true)
             const response = await apiInstance.get('user/cashout',
                 { headers: { 
                     Authorization: `Bearer ${accessToken}`
                 }}
             )
             setCashoutHistory(response.data)
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
 

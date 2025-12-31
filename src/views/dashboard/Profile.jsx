@@ -6,6 +6,7 @@ import apiInstance from "../../utils/axios";
 import Cookies from 'js-cookie';
 import Toast from "../../plugin/Toast";
 import useAxios from "../../utils/useAxios";
+import Loader from "../../components/Loader";
 
 function Profile(){
 
@@ -24,14 +25,17 @@ function Profile(){
 
     const fetchProfile = async () => {
         try {
+            setIsLoading(true)
             const response = await apiInstance.get(`user/me`, {
                 headers: {  
                     Authorization: `Bearer ${accessToken}` 
                 },
             })
             setProfile(response.data)
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
 
@@ -80,6 +84,7 @@ function Profile(){
 
     return (
         <>
+            {isLoading && <Loader />}
             <AdminNavBar />
 
             <main className="flex">

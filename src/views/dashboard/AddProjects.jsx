@@ -12,6 +12,7 @@ import Toast from "../../plugin/Toast";
 import Swal from "sweetalert2";
 import PlagiarismChecker from "../../components/PlagiarismChecker";
 import PlagiarismResults from "../../components/PlagiarismResults";
+import Loader from "../../components/Loader";
 
 
 function Projects(){
@@ -52,6 +53,7 @@ function Projects(){
     // asynchronous function for fetching projects associated with the user 
     const fetchData = async () => {
         try {
+            setIsLoading(true)
             const [projectsResponse, categoriesResponse] = await Promise.all([
                 apiInstance.get("user/project",
                     // includes JWT 
@@ -68,10 +70,12 @@ function Projects(){
             // set response data 
             setmyProjects(projectsResponse.data.results);
             setCategory(categoriesResponse.data.results);
+            setIsLoading(false)
 
         } catch (error) {
             // returns appropriate error 
             Toast("error", error.response?.data?.message || "An error occurred");
+            setIsLoading(false)
         }
     }
 
@@ -202,6 +206,7 @@ function Projects(){
 
     return (
         <>
+            {isLoading && <Loader />}
             <AdminNavBar />
             <main className="flex">
                 <LeftNavBar />

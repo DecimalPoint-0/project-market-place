@@ -34,21 +34,26 @@ function Home(){
 
     const fetchProfile = async () => {
         try {
+            setIsLoading(true)
             const response = await apiInstance.get('user/me',
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             )
             setProfile(response.data)
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
 
     const fetchAnalytics = async () => {
         try {
+            setIsLoading(true)
             const response = await apiInstance.get('user/analytics',
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             )
             setAnalytics(response.data)
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
             // Fallback mock data for development
@@ -73,12 +78,16 @@ function Home(){
                     { id: 3, title: 'Icon Pack', views: 745, downloads: 52 }
                 ]
             })
+            setIsLoading(false)
         }
     }
 
     useEffect(() => {
-        fetchProfile()
-        fetchAnalytics()
+        setIsLoading(true)
+        Promise.all([
+            fetchProfile(),
+            fetchAnalytics()
+        ]).finally(() => setIsLoading(false))
     }, [])
 
     return (
