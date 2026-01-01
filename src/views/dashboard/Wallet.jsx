@@ -54,8 +54,7 @@ function Wallet(){
             setIsLoading(true)
             const response = await apiInstance.post(`user/cashout`, formData,
                 { headers: { 
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${accessToken}`
+                    "Content-Type": "multipart/form-data"
                 }}
             )
             Toast('success', "Cashout Processed Successfully")
@@ -88,8 +87,7 @@ function Wallet(){
             setIsLoading(true)
             const response = await apiInstance.post(`user/wallet`, formData,
                 { headers: { 
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${accessToken}`
+                    "Content-Type": "multipart/form-data"
                 }}
             )
             Toast('success', "Account Details Updated Successfully")
@@ -105,13 +103,7 @@ function Wallet(){
     const fetchWallet = async () => {
         try {
             setIsLoading(true)
-            const response = await apiInstance.get('user/wallet',
-                // includes JWT 
-                { headers: { 
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${accessToken}`
-                }}
-            )
+            const response = await apiInstance.get('user/wallet')
             setWallet(response.data)
             setAccount({
                 account_name: response.data.account_name || '',
@@ -134,11 +126,7 @@ function Wallet(){
     const fetchCashoutHistory = async () => {
         try {
             setIsLoading(true)
-            const response = await apiInstance.get('user/cashout',
-                { headers: { 
-                    Authorization: `Bearer ${accessToken}`
-                }}
-            )
+            const response = await apiInstance.get('user/cashout')
             setCashoutHistory(response.data)
             setIsLoading(false)
         } catch (error) {

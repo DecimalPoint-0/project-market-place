@@ -15,11 +15,7 @@ function Transactions(){
     const fetchTransactions = async () => {
         try{
             setIsLoading(true)
-            const response = await apiInstance.get('user/transactions', 
-                { headers: { 
-                    Authorization: `Bearer ${accessToken}`
-                }}
-            )
+            const response = await apiInstance.get('user/transactions')
             setTransactions(response.data.results || [])
         }catch(error){
             console.log(error)

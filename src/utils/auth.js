@@ -31,10 +31,10 @@ export const login = async (email, password) => {
             password,
         });
 
-
         // If the request is successful (status code 200), set authentication user and display success toast
         if (status === 200) {
-            setAuthUser(data.access, data.refresh);
+            // New response format includes refresh, access, and user object
+            setAuthUser(data.access, data.refresh, data.user);
 
             // Displaying a success toast notification
             Toast.fire({
@@ -189,9 +189,15 @@ export const resetPassword = async (email, otp, password, password2) => {
 
 // Function to handle user logout
 export const logout = () => {
-    // Removing access and refresh tokens from cookies, resetting user state, and displaying success toast
+    // Removing access and refresh tokens from cookies
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
+    
+    // Clear all user data from localStorage
+    localStorage.removeItem("user_data");
+    localStorage.removeItem("user_data_fetch_time");
+    
+    // Reset user state
     useAuthStore.getState().setUser(null);
 
     // Displaying a success toast notification
@@ -222,24 +228,25 @@ export const setUser = async () => {
 };
 
 // Function to set the authenticated user and update user state
-export const setAuthUser = (access_token, refresh_token) => {
+export const setAuthUser = (access_token, refresh_token, user = null) => {
     // Setting access and refresh tokens in cookies with expiration dates
     Cookies.set("access_token", access_token, {
         expires: 1, // Access token expires in 1 day
-        secure: true,
     });
 
     Cookies.set("refresh_token", refresh_token, {
         expires: 7, // Refresh token expires in 7 days
-        secure: true,
     });
 
-    // Decoding access token to get user information
-    const user = jwt_decode(access_token) ?? null;
+    // If user data is provided from login response, use it; otherwise decode from token
+    let userData = user;
+    if (!userData) {
+        userData = jwt_decode(access_token) ?? null;
+    }
 
     // If user information is present, update user state; otherwise, set loading state to false
-    if (user) {
-        useAuthStore.getState().setUser(user);
+    if (userData) {
+        useAuthStore.getState().setUser(userData);
     }
     useAuthStore.getState().setLoading(false);
 };

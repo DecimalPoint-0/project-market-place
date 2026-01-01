@@ -1,5 +1,6 @@
 // Import the Axios library to make HTTP requests. Axios is a popular JavaScript library for this purpose.
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 // Create an instance of Axios and store it in the 'apiInstance' variable. This instance will have specific configuration options.
 const apiInstance = axios.create({
@@ -15,6 +16,20 @@ const apiInstance = axios.create({
         Accept: 'application/json', // The request expects a response in JSON format.
     },
 });
+
+// Add request interceptor to automatically attach access token to headers
+apiInstance.interceptors.request.use(
+    (config) => {
+        const accessToken = Cookies.get('access_token');
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 // Export the 'apiInstance' so that it can be used in other parts of the codebase. Other modules can import and use this Axios instance for making API requests.
 export default apiInstance;

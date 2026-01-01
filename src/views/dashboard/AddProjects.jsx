@@ -54,13 +54,7 @@ function Projects(){
         try {
             setIsLoading(true)
             const [projectsResponse, categoriesResponse] = await Promise.all([
-                apiInstance.get("user/project",
-                    // includes JWT 
-                    { headers: { 
-                        "Content-Type": "multipart/form-data",
-                        Authorization: `Bearer ${accessToken}`
-                    }}
-                ),
+                apiInstance.get("user/project"),
                 // get categories dynamically
                 apiInstance.get("/categories"),
               ]
@@ -163,8 +157,7 @@ function Projects(){
             // API post request to submit project 
             const response = await apiInstance.post("user/project/", formData, {
                 headers: { 
-                    "Content-Type": "multipart/form-data", 
-                    Authorization: `Bearer ${accessToken}` 
+                    "Content-Type": "multipart/form-data"
                 },
             });
       
@@ -262,7 +255,7 @@ function Projects(){
                                                         </td>
                                                         <td className="px-6 py-4">
                                                             <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${
-                                                                project?.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                                                project?.status === 'Approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                                                             }`}>
                                                                 {project?.status ?? 'Pending'}
                                                             </span>

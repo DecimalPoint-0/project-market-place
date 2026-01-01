@@ -25,11 +25,7 @@ function Profile(){
     const fetchProfile = async () => {
         try {
             setIsLoading(true)
-            const response = await apiInstance.get(`user/me`, {
-                headers: {  
-                    Authorization: `Bearer ${accessToken}` 
-                },
-            })
+            const response = await apiInstance.get(`user/me`)
             setProfile(response.data)
             setIsLoading(false)
         } catch (error) {
@@ -60,8 +56,7 @@ function Profile(){
         try {
             const response = await apiInstance.patch(`user/me`, formData, {
                 headers: { 
-                    "Content-Type": "multipart/form-data", 
-                    Authorization: `Bearer ${accessToken}` 
+                    "Content-Type": "multipart/form-data"
                 },
             })
             Toast('success', "Profile Updated Successfully")

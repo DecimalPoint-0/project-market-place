@@ -17,9 +17,7 @@ export const useUserRefresh = () => {
         if (!accessToken) return;
 
         try {
-            const response = await apiInstance.get('user/me', {
-                headers: { Authorization: `Bearer ${accessToken}` }
-            });
+            const response = await apiInstance.get('user/me');
             setUser(response.data);
         } catch (error) {
             console.log('Error refreshing user data:', error);

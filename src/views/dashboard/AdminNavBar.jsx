@@ -1,35 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import '@fortawesome/fontawesome-free/css/all.css';
 import logo from '../../assets/images/logo.png';
-import Cookies from 'js-cookie';
 import apiInstance from "../../utils/axios";
 import { Link } from "react-router-dom";
 import { SidebarContext } from "../../context/SidebarContext";
+import { useAuthStore } from "../../store/auth";
+import { logout } from "../../utils/auth";
 
 function AdminNavBar(){
 
-    const accessToken = Cookies.get('access_token');
     const [notification, setNotification] = useState(false);
-    const [profile, setProfile] = useState({ name: "" });
+    const cachedUserData = useAuthStore((state) => state.allUserData);
     const { sidebarOpen, setSidebarOpen } = useContext(SidebarContext);
 
     const fetchNotification = async () => {
         try {
-            const response = await apiInstance.get('user/notifications', 
-                { headers: { Authorization: `Bearer ${accessToken}` } }
-            )
+            const response = await apiInstance.get('user/notifications')
             setNotification(response.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const fetchProfile = async () => {
-        try {
-            const response = await apiInstance.get('user/me',
-                { headers: { Authorization: `Bearer ${accessToken}` } }
-            )
-            setProfile(response.data)
         } catch (error) {
             console.log(error)
         }
@@ -37,11 +24,10 @@ function AdminNavBar(){
 
     useEffect(() => {
         fetchNotification();
-        fetchProfile();
     }, [])
 
     const handleLogout = () => {
-        Cookies.remove('access_token');
+        logout();
         window.location.href = '/sign-in';
     }
 
@@ -100,11 +86,11 @@ function AdminNavBar(){
                     {/* Profile Dropdown */}
                     <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
                         <div className="hidden sm:flex flex-col text-right">
-                            <p className="text-sm font-semibold text-primary">{profile.name || "User"}</p>
+                            <p className="text-sm font-semibold text-primary">{cachedUserData?.name || "User"}</p>
                             <p className="text-xs text-slate-500">Researcher</p>
                         </div>
                         <div className="w-10 h-10 bg-gradient-to-br from-secondary to-amber-400 rounded-full flex items-center justify-center text-white font-bold">
-                            {profile.name?.charAt(0).toUpperCase() || "U"}
+                            {cachedUserData?.name?.charAt(0).toUpperCase() || "U"}
                         </div>
                     </div>
 

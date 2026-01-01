@@ -25,7 +25,8 @@ function Home(){
         likes: 0
     })
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isAnalyticsLoading, setIsAnalyticsLoading] = useState(true);
 
     const [analytics, setAnalytics] = useState({
         revenue_data: [],
@@ -36,9 +37,7 @@ function Home(){
     const fetchProfile = async () => {
         try {
             setIsLoading(true)
-            const response = await apiInstance.get('user/me',
-                { headers: { Authorization: `Bearer ${accessToken}` } }
-            )
+            const response = await apiInstance.get('user/me')
             setProfile(response.data)
             setIsLoading(false)
         } catch (error) {
@@ -49,12 +48,10 @@ function Home(){
 
     const fetchAnalytics = async () => {
         try {
-            setIsLoading(true)
-            const response = await apiInstance.get('user/analytics',
-                { headers: { Authorization: `Bearer ${accessToken}` } }
-            )
+            setIsAnalyticsLoading(true)
+            const response = await apiInstance.get('user/analytics')
             setAnalytics(response.data)
-            setIsLoading(false)
+            setIsAnalyticsLoading(false)
         } catch (error) {
             console.log(error)
             // Fallback mock data for development
@@ -79,18 +76,15 @@ function Home(){
                     { id: 3, title: 'Icon Pack', views: 745, downloads: 52 }
                 ]
             })
-            setIsLoading(false)
+            setIsAnalyticsLoading(false)
         }
     }
 
     useEffect(() => {
-        // Use cached profile data if available, otherwise fetch
+        // Fetch profile and analytics on component mount
         fetchProfile()
-        
-        // Only fetch analytics on page load
-        setIsLoading(true)
-        fetchAnalytics().finally(() => setIsLoading(false))
-    }, [cachedUserData])
+        fetchAnalytics()
+    }, [])
 
     return (
         <>
@@ -100,17 +94,10 @@ function Home(){
                 {/* Main Content */}
                 <div className="w-full pt-6 px-4 md:px-8 pb-8 bg-slate-50 min-h-[calc(100vh-64px)]">
                     <div className="max-w-7xl mx-auto">
-                        
-                        {/* Welcome Section */}
-                        <div className="mb-8">
-                            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                                Welcome back, {profile.name || 'User'} 👋
-                            </h1>
-                            <p className="text-slate-600">Here's what's happening with Project Nexus today</p>
-                        </div>
-
-                        {/* Stats Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                         {/* Stats Grid */}
+                        <div className="relative">
+                            {isLoading && <Loader />}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                             {/* Total Projects */}
                             <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                                 <div className="flex items-center justify-between mb-4">
@@ -175,8 +162,15 @@ function Home(){
                                 </p>
                             </div>
                         </div>
+                        </div>
 
-                        {/* CTA Section */}
+                        {/* Welcome Section */}
+                        <div className="mb-8">
+                            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                                Welcome back, {profile.name || 'User'} 👋
+                            </h1>
+                            <p className="text-slate-600">Here's what's happening with Project Nexus today</p>
+                        </div>
                         <div className="bg-gradient-primary text-white rounded-xl p-8 mb-8 overflow-hidden relative">
                             <div className="absolute -right-20 -top-20 w-40 h-40 bg-white opacity-5 rounded-full"></div>
                             <div className="relative z-10">
@@ -239,7 +233,8 @@ function Home(){
                         </div>
 
                         {/* Analytics Section */}
-                        <div className="mt-12">
+                        <div className="mt-12 relative">
+                            {isAnalyticsLoading && <Loader />}
                             <h2 className="text-2xl font-bold text-primary mb-6">Analytics & Performance</h2>
                             
                             {/* Revenue Trend Chart */}
